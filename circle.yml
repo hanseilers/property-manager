@@ -1,0 +1,17 @@
+machine:
+  services:
+    - docker
+
+dependencies:
+  override:
+    - sudo pip install -U docker-compose
+#wowi
+test:
+  override:
+    - docker-compose run -d --no-deps web
+    - cd app; mocha
+deployment:
+  hub:
+    branch: master
+    commands:
+      - $DEPLOY
