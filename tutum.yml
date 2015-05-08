@@ -3,10 +3,3 @@ web:
   autorestart: always
   ports:
     - "80:3000"
-  links:
-   - "redis:redis"
-redis:
-    image: redis
-    autorestart: always
-    ports:
-        - "6379:6379"
