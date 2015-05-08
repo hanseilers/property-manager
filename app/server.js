@@ -16,6 +16,10 @@ app.get('/', function(req, res) {
   res.json({ message: 'This our property management API' });
 });
 
+app.post('/', function(req, res) {
+  res.json({ message: 'This our property management API' });
+});
+
 // Register all our routes with /api
 app.use('/api/v1', app.router);
 
