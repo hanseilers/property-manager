@@ -1,5 +1,5 @@
 web:
-  image: hanseilers/node-docker-workflow-base
+  image: hanseilers/property-manager
   autorestart: always
   ports:
     - "80:3000"
