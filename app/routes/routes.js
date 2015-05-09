@@ -1,5 +1,6 @@
 var util = require('util');
 var express = require('express');
+var models  = require('../models');
 var app = express();
 var expressValidator = require('express-validator');
 
@@ -17,9 +18,17 @@ app.post('/properties', function(req, res) {
   		res.json({ msg: 'There have been validation errors. //TODO', errors: errors});
   		return;
   	}
+
   	res.json({ msg: 'Property saved. //TODO'});
 
 });
+
+app.get('/properties', function(req, res){
+	models.Properties.findAll()
+	.then(function(users) {
+    	res.json(users);
+ 	});//findall
+});//app.get
 
 
 // Initial route
