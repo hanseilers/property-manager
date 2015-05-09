@@ -62,13 +62,13 @@ describe('Routing', function() {
 	.post('/api/v1/properties')
 	.send(property)
 	.expect(200)
-    // end handles the response
+	// end handles the response
 	.end(function(err, res) {
           if (err) {
             throw err;
           }
           // this is should.js syntax, very clear
-         // res.should.have.statusCode(200);
+          res.body.message.should.containEql('Property must be stored');
           done();
         });
     });
