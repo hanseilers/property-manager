@@ -9,7 +9,7 @@ dependencies:
 test:
   override:
     - docker-compose run -d --no-deps web
-    - cd app; mocha
+    - cd app;npm install; mocha
 deployment:
   hub:
     branch: master
