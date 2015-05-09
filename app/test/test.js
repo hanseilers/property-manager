@@ -47,4 +47,32 @@ describe('Routing', function() {
     });
 
   });
+
+  describe('Property', function() {
+
+  	var property = {
+        city: 'Blijham',
+        streetname: 'Winschoterweg ',
+        houseNumber: '17',
+        postalCode: '9697XC'
+      };
+
+    it('should return 200 on posting a property', function(done) {
+    request(url)
+	.post('/api/v1/properties')
+	.send(property)
+	.expect(200)
+    // end handles the response
+	.end(function(err, res) {
+          if (err) {
+            throw err;
+          }
+          // this is should.js syntax, very clear
+         // res.should.have.statusCode(200);
+          done();
+        });
+    });
+
+  });
+
 });
