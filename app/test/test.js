@@ -3,7 +3,7 @@ var should = require('should');
 var request = require('supertest');
 
 describe('Routing', function() {
-  var url = 'http://127.0.0.1:3000';
+  var url = 'http://localhost:3000';
   before(function(done) { 
 	done();
   });
@@ -58,17 +58,37 @@ describe('Routing', function() {
       };
 
     it('should return 200 on posting a property', function(done) {
+	    request(url)
+		.post('/api/v1/properties')
+		.send(property)
+		.set('Accept', 'application/json')
+		.expect(200)
+		.expect('Content-Type', /json/)
+		// end handles the response
+		.end(function(err, res) {
+	     	if (err) {
+	        	throw err;
+	         }
+	          // this is should.js syntax, very clear
+	         res.body.msg.should.containEql('Property saved');
+	         done();
+	     });
+    });
+
+    var emptyProperty = {};
+
+    it('should return 400 on posting a property with invalid attributes', function(done) {
     request(url)
 	.post('/api/v1/properties')
-	.send(property)
-	.expect(200)
+	.send(emptyProperty)
+	.expect(400)
 	// end handles the response
 	.end(function(err, res) {
           if (err) {
             throw err;
           }
           // this is should.js syntax, very clear
-          res.body.message.should.containEql('Property must be stored');
+          res.body.msg.should.containEql('errors');
           done();
         });
     });

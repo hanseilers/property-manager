@@ -1,14 +1,30 @@
+var util = require('util');
 var express = require('express');
-var router = express();
+var app = express();
+var expressValidator = require('express-validator');
 
-// Initial route
-router.all('/', function(req, res) {
-  res.json({ message: 'This our property management API' });
-});
+app.use(express.bodyParser());
+app.use(expressValidator());
 
 //Store a property
-router.post('/properties', function(req, res) {
-  res.json({ message: 'Property must be stored. //TODO' });
+app.post('/properties', function(req, res) {
+  	req.checkBody('houseNumber', 'houseNumber is requird').notEmpty();
+	console.log(req.body.houseNumber);
+	var errors = req.validationErrors();
+
+  	if (errors) {
+  		res.status(400);
+  		res.json({ msg: 'There have been validation errors. //TODO', errors: errors});
+  		return;
+  	}
+  	res.json({ msg: 'Property saved. //TODO'});
+
 });
 
-module.exports = router;
+
+// Initial route
+app.all('/', function(req, res) {
+  res.json({ msg: 'This our property management API' });
+});
+
+module.exports = app;
