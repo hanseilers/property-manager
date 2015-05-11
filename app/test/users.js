@@ -1,15 +1,15 @@
 var assert = require("assert");
 var should = require('should');
 var request = require('supertest');
+var testConfig = require('./testconfig');
 
 describe('Users', function() {
-  var url = 'http://localhost:3000';
   
    //clean test database   
     before(function(done) {
-      request(url)
+      request(testConfig.url)
         .delete('/api/v1/users/')
-        .send({username:'hans'})
+        .send({username:testConfig.testUser1.username})
         .expect(200)
         .end(function(err, res) {
           if (err) {
@@ -22,15 +22,10 @@ describe('Users', function() {
 
     });
     
-     var user = {
-      username: 'hans',
-      password: 'Winschoterweg '
-    };
-
     it('should return 200 on posting a user', function(done) {
-      request(url)
+      request(testConfig.url)
         .post('/api/v1/users')
-        .send(user)
+        .send(testConfig.testUser1)
         .set('Accept', 'application/json')
         .expect(200)
         .expect('Content-Type', /json/)

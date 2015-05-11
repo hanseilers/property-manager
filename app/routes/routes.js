@@ -12,7 +12,7 @@ app.use(expressValidator());
 
 //Store a property
 app.route('/properties')
-  .post( propertyController.postProperty)
+  .post(authController.isAuthenticated, propertyController.postProperty)
   .get(propertyController.getAllProperties)
   .delete(propertyController.deleteAllProperties);
 

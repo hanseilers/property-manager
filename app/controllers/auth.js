@@ -1,18 +1,18 @@
 // Load required packages
 var passport = require('passport');
 var BasicStrategy = require('passport-http').BasicStrategy;
-var Users = require('../models/users');
+var model = require('../models');
 
 passport.use(new BasicStrategy(
   function(username, password, callback) {
     
-     Users.findOne({
+     model.Users.findOne({
       where: {
-        username: password
+        username: username
       }
     })
-    .then(function(users) {
-      var user = users[0];
+    .then(function(data) {
+      var user = data.dataValues;
       return callback(null, user);
     }); 
     

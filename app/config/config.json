@@ -3,7 +3,7 @@
     "username": "propertymanager",
     "password": "10zmngz",
     "database": "properties",
-    "host": "db4free.net",
+    "host": "127.0.0.1",
     "dialect": "mysql"
   },
   "test": {
