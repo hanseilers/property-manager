@@ -20,8 +20,9 @@ app.route('/properties/:id')
   .get(propertyController.getProperty);
 
 app.route('/users')
-  .get(userController.getUser);
-  //.delete(userController;
+  .get(userController.getUser)
+  .post(userController.postUser)
+  .delete(userController.deleteUserbyUsername);
 
 // Initial route
 app.all('/', function(req, res) {

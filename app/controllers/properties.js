@@ -11,7 +11,7 @@ exports.postProperty = function(req, res) {
   if (errors) {
     res.status(400);
     res.json({
-      msg: 'There have been validation errors. //TODO',
+      msg: 'There are validation errors. //TODO',
       errors: errors
     });
     return;
@@ -23,7 +23,7 @@ exports.postProperty = function(req, res) {
     houseNumber: houseNumber,
     street: street
   }).then(function(instance) {
-    res.json(utils.createdResponseTemplate('Property created', instance.dataValues.id));
+    res.json(utils.createdResponseTemplate('Property created',0, instance.dataValues.id));
   });
 
 };
@@ -36,7 +36,7 @@ exports.getProperty = function(req, res) {
       }
     })
     .then(function(properties) {
-      res.json(utils.multipleItemsResponseTemplate('', properties, properties.length));
+      res.json(utils.multipleItemsResponseTemplate('', 0,properties, properties.length));
     }); 
 }; //app.get
 
@@ -44,7 +44,7 @@ exports.getProperty = function(req, res) {
 exports.getAllProperties = function(req, res) {
   models.Properties.findAll()
     .then(function(properties) {
-      res.json(utils.multipleItemsResponseTemplate('', properties, properties.length));
+      res.json(utils.multipleItemsResponseTemplate('', 0,properties, properties.length));
     }); //findall
 }; //app.get
 

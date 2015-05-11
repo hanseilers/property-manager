@@ -1,22 +1,22 @@
 // Load required packages
-var Users = require('../models/users');
+var model = require('../models');
 var utils = require('../common/utils');
 
 // Create endpoint /api/users for POST
 exports.postUser = function(req, res) {
   var username = req.body.username;
   var password = req.body.password;
-  Users.create({
+  model.Users.create({
     username: username,
     password: password
   }).then(function(instance) {
-    res.json(utils.createdResponseTemplate('User created', instance.dataValues.id));
+    res.json(utils.createdResponseTemplate('User created', 0, instance.dataValues.id));
   });
 };
 
 // Create endpoint /api/users for GET
 exports.getUser = function(req, res) {
-   Users.findOne({
+   model.Users.findOne({
       where: {
         id: req.param('id')
       }
@@ -26,15 +26,15 @@ exports.getUser = function(req, res) {
     }); 
 };
 
+
 // Create endpoint /api/users for GET
-exports.authenticateUser = function(req, res) {
-   Users.findOne({
+exports.deleteUserbyUsername = function(req, res) {
+   model.Users.destroy({
       where: {
-        username: req.param('username'),
-        password: req.param('password')
+        username: req.body.username
       }
     })
-    .then(function(users) {
-      res.json(utils.multipleItemsResponseTemplate('', users, users.length));
+    .then(function(affectedRows) {
+      res.json(utils.affectedRowsTemplate(' were affected',0, affectedRows));
     }); 
 };
