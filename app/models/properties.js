@@ -2,6 +2,11 @@
 
 module.exports = function(sequelize, DataTypes) {
   var Properties = sequelize.define("Properties", {
+    id: {
+      primaryKey: true,
+      type: DataTypes.UUID,
+      defaultValue: DataTypes.UUIDV4,
+    },
     street: DataTypes.STRING,
     houseNumber: DataTypes.STRING,
     city: DataTypes.STRING,
@@ -9,7 +14,7 @@ module.exports = function(sequelize, DataTypes) {
   }, {
     classMethods: {
       associate: function(models) {
-        Properties.belongsTo(models.Users);
+        Properties.hasMany(models.Sales);
       }
     }
   });

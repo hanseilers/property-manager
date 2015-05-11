@@ -1,10 +1,15 @@
 // Get the packages we need
 var express = require('express');
 var routesApiV1 = require('./routes/routes');
-var models = require("./models");
+var passport = require('passport');
+var models = require('./models');
+var authController = require('./controllers/auth');
 
 // Create our Express application
 var app = express();
+
+// Use the passport package in our application
+app.use(passport.initialize());
 
 // Use environment defined port or 3000
 var port = process.env.PORT || 3000;

@@ -1,39 +1,33 @@
-var util = require('util');
 var express = require('express');
-var models  = require('../models');
+var models = require('../models');
+var bodyParser = require('body-parser')
+var propertyController = require('../controllers/properties');
+var userController = require('../controllers/users');
 var app = express();
 var expressValidator = require('express-validator');
+var authController = require('../controllers/auth');
 
-app.use(express.bodyParser());
+app.use(bodyParser.json());
 app.use(expressValidator());
 
 //Store a property
-app.post('/properties', function(req, res) {
-  	req.checkBody('houseNumber', 'houseNumber is requird').notEmpty();
-	console.log(req.body.houseNumber);
-	var errors = req.validationErrors();
+app.route('/properties')
+  .post( propertyController.postProperty)
+  .get(propertyController.getAllProperties)
+  .delete(propertyController.deleteAllProperties);
 
-  	if (errors) {
-  		res.status(400);
-  		res.json({ msg: 'There have been validation errors. //TODO', errors: errors});
-  		return;
-  	}
+app.route('/properties/:id')
+  .get(propertyController.getProperty);
 
-  	res.json({ msg: 'Property saved. //TODO'});
-
-});
-
-app.get('/properties', function(req, res){
-	models.Properties.findAll()
-	.then(function(users) {
-    	res.json(users);
- 	});//findall
-});//app.get
-
+app.route('/users')
+  .get(userController.getUser);
+  //.delete(userController;
 
 // Initial route
 app.all('/', function(req, res) {
-  res.json({ msg: 'This our property management API' });
+  res.json({
+    msg: 'This our property management API'
+  });
 });
 
 module.exports = app;
