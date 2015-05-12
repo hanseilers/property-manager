@@ -9,6 +9,7 @@ exports.testProperty = {
 
 exports.testUser1  = {
       username: 'hans',
-      password: 'Winschoterweg'
+      password: 'Winschoterweg',
+      id:''
     };
 	

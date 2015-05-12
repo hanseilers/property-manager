@@ -11,12 +11,21 @@ passport.use(new BasicStrategy(
         username: username
       }
     })
-    .then(function(data) {
-      var user = data.dataValues;
-      return callback(null, user);
+    .then(function(user) {
+      if(!user){ return callback(null, false); }
+      
+      // Make sure the password is correct
+      user.validatePassword(password, function(err, isMatch) {
+        if (err) { return callback(err); }
+
+        // Password did not match
+        if (!isMatch) { return callback(null, false); }
+
+        // Success
+        return callback(null, user);
+      });
     }); 
     
-   
   }
 ));
 

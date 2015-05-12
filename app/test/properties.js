@@ -16,11 +16,25 @@ describe('Property', function() {
         }
         // this is should.js syntax, very clear
         res.body.msg.should.containEql('Deleted');
-        done();
+        
       });
 
+  //create user
+   request(testConfig.url)
+        .post('/api/v1/users')
+        .send(testConfig.testUser1)
+        .set('Accept', 'application/json')
+        .end(function(err, res) {
+          if (err) {
+            throw err;
+          }
+          // this is should.js syntax, very clear
+          res.body.msg.should.containEql('User created');
+          res.body.should.have.property('id');
+          testConfig.testUser1.id= res.body.id;
+          done();
+        });
   });
-
 
   it('should return 200 on posting a property', function(done) {
     request(testConfig.url)
@@ -93,6 +107,36 @@ describe('Property', function() {
         res.body.results.totalResults.should.equal(1);
         done();
       });
+  });
+  
+   after(function(done) {
+    request(testConfig.url)
+      .delete('/api/v1/properties')
+      .auth(testConfig.testUser1.username, testConfig.testUser1.password)
+      .expect(200)
+      .end(function(err, res) {
+        if (err) {
+          throw err;
+        }
+        // this is should.js syntax, very clear
+        res.body.msg.should.containEql('Deleted');
+        done();
+      });
+
+  //create user
+   request(testConfig.url)
+        .delete('/api/v1/users/' + testConfig.testUser1.id)
+        .set('Accept', 'application/json')
+        .end(function(err, res) {
+          if (err) {
+            throw err;
+          }
+          console.dir(res);
+          console.dir(err);
+          res.body.msg.should.containEql('affected');
+          res.body.should.have.property('id');
+          done();
+        });
   });
 
 });

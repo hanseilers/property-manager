@@ -20,12 +20,15 @@ app.route('/properties/:id')
   .get(propertyController.getProperty);
 
 app.route('/users')
-  .get(userController.getUser)
   .post(userController.postUser)
   .delete(userController.deleteUserbyUsername);
 
+app.route('/users/:id')
+  .get(userController.getUser)
+  .delete(userController.deleteUserbyId);
+  
 // Initial route
-app.all('/', function(req, res) {
+app.all('/', function (req, res) {
   res.json({
     msg: 'This our property management API'
   });

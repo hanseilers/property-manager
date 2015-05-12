@@ -16,13 +16,13 @@ exports.postUser = function(req, res) {
 
 // Create endpoint /api/users for GET
 exports.getUser = function(req, res) {
-   model.Users.findOne({
+   model.Users.findAll({
       where: {
-        id: req.param('id')
+        id: req.params.id
       }
     })
     .then(function(users) {
-      res.json(utils.multipleItemsResponseTemplate('', users, users.length));
+      res.json(utils.multipleItemsResponseTemplate('', 0, users, users.length));
     }); 
 };
 
@@ -32,6 +32,18 @@ exports.deleteUserbyUsername = function(req, res) {
    model.Users.destroy({
       where: {
         username: req.body.username
+      }
+    })
+    .then(function(affectedRows) {
+      res.json(utils.affectedRowsTemplate(' were affected',0, affectedRows));
+    }); 
+};
+
+// Create endpoint /api/users for GET
+exports.deleteUserbyId = function(req, res) {
+   model.Users.destroy({
+      where: {
+        username: req.params.id
       }
     })
     .then(function(affectedRows) {

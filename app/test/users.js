@@ -37,7 +37,41 @@ describe('Users', function() {
           // this is should.js syntax, very clear
           res.body.msg.should.containEql('User created');
           res.body.should.have.property('id');
+          testConfig.testUser1.id = res.body.id;
+        });
+    });
+    
+     it('should return 200 on getting user', function(done) {
+      request(testConfig.url)
+        .get('/api/v1/users/' + testConfig.testUser1.id)
+        .send(testConfig.testUser1)
+        .set('Accept', 'application/json')
+        .expect(200)
+        // end handles the response
+        .end(function(err, res) {
+          if (err) {
+            throw err;
+          }
+          // this is should.js syntax, very clear
+          console.dir(res.body)
+          res.body.results.totalResults.should.equal(1);
           done();
         });
+    });
+    
+    //clean test database   
+    after(function(done) {
+      request(testConfig.url)
+        .delete('/api/v1/users/' + testConfig.testUser1.id)
+        .expect(200)
+        .end(function(err, res) {
+          if (err) {
+            throw err;
+          }
+          // this is should.js syntax, very clear
+          res.body.msg.should.containEql('were affected');
+          done();
+        });
+
     });
 });
