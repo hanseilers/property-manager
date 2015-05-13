@@ -43,7 +43,7 @@ exports.deleteUserbyUsername = function(req, res) {
 exports.deleteUserbyId = function(req, res) {
    model.Users.destroy({
       where: {
-        username: req.params.id
+        id: req.params.id
       }
     })
     .then(function(affectedRows) {

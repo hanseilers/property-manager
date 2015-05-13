@@ -38,6 +38,7 @@ describe('Users', function() {
           res.body.msg.should.containEql('User created');
           res.body.should.have.property('id');
           testConfig.testUser1.id = res.body.id;
+          done();
         });
     });
     
@@ -53,7 +54,6 @@ describe('Users', function() {
             throw err;
           }
           // this is should.js syntax, very clear
-          console.dir(res.body)
           res.body.results.totalResults.should.equal(1);
           done();
         });
