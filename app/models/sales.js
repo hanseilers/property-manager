@@ -8,7 +8,11 @@ module.exports = function(sequelize, DataTypes) {
       defaultValue: DataTypes.UUIDV4,
     },
      m2: DataTypes.INTEGER,
-    m3: DataTypes.INTEGER
+    m3: DataTypes.INTEGER,
+    askingPrice:DataTypes.INTEGER,
+    photo1Url: DataTypes.STRING,
+    photo2Url: DataTypes.STRING,
+    movie1Url: DataTypes.STRING,
   }, {
     classMethods: {
       associate: function(models) {
